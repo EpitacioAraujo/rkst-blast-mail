@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmailListRequest;
 use App\Http\Requests\UpdateEmailListRequest;
 use App\Models\EmailList;
+use Illuminate\Http\UploadedFile;
 
 class EmailListController extends Controller
 {
@@ -23,7 +24,7 @@ class EmailListController extends Controller
      */
     public function create()
     {
-        //
+        return view('email_lists.create', []);
     }
 
     /**
@@ -31,7 +32,22 @@ class EmailListController extends Controller
      */
     public function store(StoreEmailListRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        /** @var UploadedFile $file */
+        $file = $validated['file'] ?? null;
+        $path = null;
+
+        unset($validated['file']);
+
+        if(isset($file))
+        {
+            $path = $file->store('email_lists', 'public');
+        }
+
+        EmailList::create($validated)->save();
+
+        return redirect()->route('email_lists.index')->with('success', __('Email list created successfully.'));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class StoreEmailListRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreEmailListRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,8 @@ class StoreEmailListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'file' => [File::types(['csv', 'txt'])->max(1024 * 10)], // 10 MB max
         ];
     }
 }

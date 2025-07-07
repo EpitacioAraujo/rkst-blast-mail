@@ -12,7 +12,7 @@
                     @forelse ($emailLists as $emailList)
                         <div class="mb-4">
                             <x-link-button href="/">
-                                {{ $emailList->name }}
+                                {{ $emailList->title }}
                             </x-link-button>
                         </div>
                     @empty
