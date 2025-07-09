@@ -35,17 +35,35 @@ class EmailListController extends Controller
         $validated = $request->validated();
 
         /** @var UploadedFile $file */
-        $file = $validated['file'] ?? null;
-        $path = null;
+        $file = $request->file('file');
 
-        unset($validated['file']);
+        $fileStream = fopen($file->getRealPath(), 'r');
 
-        if(isset($file))
+        $i = 0;
+        $items = [];
+
+        while(($row = fgetcsv($fileStream)) != false)
         {
-            $path = $file->store('email_lists', 'public');
+            if($i++ == 0) { continue; }
+
+            [
+                0 => $email,
+                1 => $name,
+            ] = $row; // This is just to avoid unused variable warning, you can process the row as needed
+
+            $items[] = [
+                'email' => $email,
+                'name' => $name,
+            ];
         }
 
-        EmailList::create($validated)->save();
+        fclose($fileStream);
+
+        $emailList = EmailList::create([
+            'title' => $validated['title']
+        ]);
+
+        $emailList->subscribers()->createMany($items);
 
         return redirect()->route('email_lists.index')->with('success', __('Email list created successfully.'));
     }

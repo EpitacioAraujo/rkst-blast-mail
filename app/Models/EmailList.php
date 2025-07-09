@@ -9,4 +9,9 @@ class EmailList extends Model
 {
     /** @use HasFactory<\Database\Factories\EmailListFactory> */
     use HasFactory;
+
+    public function subscribers()
+    {
+        return $this->hasMany(Subscriber::class);
+    }
 }
