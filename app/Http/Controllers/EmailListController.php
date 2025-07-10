@@ -5,19 +5,30 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmailListRequest;
 use App\Http\Requests\UpdateEmailListRequest;
 use App\Models\EmailList;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class EmailListController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = request()->query('search', '');
+
+        $emailLists = EmailList::select()
+            ->when($search, function (Builder $query) use ($search) {
+                $query->where('title', 'like', "%{$search}%");
+            })
+            ->withCount('subscribers')
+            ->paginate(1)
+            ->appends(['search' => $search]);
+
         return view('email_lists.lists', [
-            'emailLists' => EmailList::all(),
+            'emailLists' => $emailLists,
         ]);
     }
 

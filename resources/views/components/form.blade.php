@@ -2,7 +2,7 @@
     'method' => 'GET'
 ])
 
-<form {{ $attributes->class(['flex', 'flex-col', 'gap-4']) }} method="{{ $method }}" enctype="multipart/form-data">
+<form {{ $attributes->merge(['class' => 'flex flex-col gap-4']) }} method="{{ $method }}" enctype="multipart/form-data">
     @if($method !== 'GET')
         @csrf
         @method($method)

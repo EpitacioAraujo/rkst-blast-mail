@@ -1,14 +1,28 @@
+@php
+    $crumbs = [
+        [
+            "label" => __('Email lists'),
+            "url" => route('email_lists.index')
+        ],
+        [
+            "label" => $emailList->title,
+        ]
+    ];
+@endphp
+
 <x-layouts.app>
+    <x-slot:header>
+        <x-breadcrumbs :crumbs="$crumbs" ></x-breadcrumbs>
+    </x-slot:header>
+
     <x-section-content>
         <x-card class="flex flex-col gap-4">
-            <div class="w-full grid grid-cols-4 gap-4">
-                <x-form id="search_form" :action="route('email_lists.show', $emailList)">
+            <div class="w-full flex flex-row justify-between">
+                <div></div>
+
+                <x-form id="search_form" :action="route('email_lists.show', $emailList)" class="w-1/3">
                     <x-text-input id="search" name="search" :value="request('search')" placeholder="{{ __('Search')}} " autofocus />
                 </x-form>
-
-                <x-primary-button class="w-min" type="submit" form="search_form">
-                    {{ __('Search') }}
-                </x-primary-button>
             </div>
 
             <x-table class="w-full ">
@@ -20,11 +34,11 @@
 
                 <x-slot:body>
                     @foreach($subscribers as $subscriber)
-                    <tr>
-                        <th>{{ $loop->iteration }}</th>
-                        <td>{{ $subscriber->name }}</td>
-                        <td>{{ $subscriber->email }}</td>
-                    </tr>
+                        <tr>
+                            <th>{{ $subscriber->id }}</th>
+                            <td>{{ $subscriber->name }}</td>
+                            <td>{{ $subscriber->email }}</td>
+                        </tr>
                     @endforeach
                 </x-slot:body>
             </x-table>
@@ -36,6 +50,7 @@
                     'search' => request('search'),
                     'page' => $page
                 ])"
+                :currentPage="request()->query('page', 0)"
             />
         </x-card>
     </x-section-content>
