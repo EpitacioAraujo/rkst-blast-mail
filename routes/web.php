@@ -14,6 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/email-lists', [EmailListController::class, 'index'])->name('email_lists.index');
     Route::get('/email-lists/create', [EmailListController::class, 'create'])->name('email_lists.create');
     Route::post('/email-lists/create', [EmailListController::class, 'store']);
+    Route::get('/email-lists/{emailList}', [EmailListController::class, 'show'])->name('email_lists.show');
 });
 
 Route::get('/', function () {

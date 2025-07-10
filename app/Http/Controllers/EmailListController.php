@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmailListRequest;
 use App\Http\Requests\UpdateEmailListRequest;
 use App\Models\EmailList;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 
 class EmailListController extends Controller
 {
@@ -59,11 +61,13 @@ class EmailListController extends Controller
 
         fclose($fileStream);
 
-        $emailList = EmailList::create([
-            'title' => $validated['title']
-        ]);
+        DB::transaction(function () use ($validated, $items) {
+            $emailList = EmailList::create([
+                'title' => $validated['title']
+            ]);
 
-        $emailList->subscribers()->createMany($items);
+            $emailList->subscribers()->createMany($items);
+        });
 
         return redirect()->route('email_lists.index')->with('success', __('Email list created successfully.'));
     }
@@ -73,7 +77,18 @@ class EmailListController extends Controller
      */
     public function show(EmailList $emailList)
     {
-        //
+        $search = request()->query('search', '');
+
+        $subscribers = $emailList->subscribers()->when($search, function ($query) use ($search) {
+            $query
+                ->where('email', 'like', "%{$search}%")
+                ->orWhere('name', 'like', "%{$search}%");
+        })->paginate(10)->appends(['search' => $search]);
+
+        return view('email_lists.show', [
+            'emailList' => $emailList,
+            'subscribers' => $subscribers,
+        ]);
     }
 
     /**

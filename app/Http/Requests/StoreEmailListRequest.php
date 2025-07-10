@@ -24,7 +24,7 @@ class StoreEmailListRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'file' => [File::types(['csv', 'txt'])->max(1024 * 10)], // 10 MB max
+            'file' => ['required', File::types(['csv', 'txt'])->max(1024 * 10)], // 10 MB max
         ];
     }
 }
