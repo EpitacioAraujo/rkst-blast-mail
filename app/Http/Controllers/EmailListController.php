@@ -90,11 +90,15 @@ class EmailListController extends Controller
     {
         $search = request()->query('search', '');
 
-        $subscribers = $emailList->subscribers()->when($search, function ($query) use ($search) {
-            $query
-                ->where('email', 'like', "%{$search}%")
-                ->orWhere('name', 'like', "%{$search}%");
-        })->paginate(10)->appends(['search' => $search]);
+        $subscribers = $emailList
+            ->subscribers()
+            ->when($search, function ($query) use ($search) {
+                $query
+                    ->where('email', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->appends(['search' => $search]);
 
         return view('email_lists.show', [
             'emailList' => $emailList,

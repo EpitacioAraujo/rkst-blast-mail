@@ -21,5 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard(); // Disable mass assignment protection globally
+        Model::preventLazyLoading(!app()->isProduction()); // Prevent lazy loading in production
     }
 }
