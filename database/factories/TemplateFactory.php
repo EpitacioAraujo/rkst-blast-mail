@@ -2,22 +2,18 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Template>
- */
 class TemplateFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            "user_id" => User::factory(),
+            "title" => $this->faker->sentence(3),
+            "body" => $this->faker->randomHtml(),
+            "deleted_at" => $this->faker->optional(0.3)->dateTimeBetween("-3 days", "now"),
         ];
     }
 }

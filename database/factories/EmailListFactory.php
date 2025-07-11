@@ -18,6 +18,7 @@ class EmailListFactory extends Factory
     {
         return [
             "title" => $this->faker->sentence(3),
+            "deleted_at" => $this->faker->optional(0.3)->dateTimeBetween("-3 days", "now"),
         ];
     }
 }

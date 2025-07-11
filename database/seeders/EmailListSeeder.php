@@ -7,7 +7,7 @@ use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class EmailListSeed extends Seeder
+class EmailListSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class EmailListSeed extends Seeder
     {
         User::all()->each(function ($user) {
             $user->emailLists()->saveMany(
-                EmailList::factory()->count(15)->make(['user_id' => $user->id])
+                EmailList::factory()->count(7)->make()
             );
         });
     }

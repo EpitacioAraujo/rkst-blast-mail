@@ -11,15 +11,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class SubscriberFactory extends Factory
 {
     /**
-     * Define the model's default state.
+     * Define the model"s default state.
      *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
         return [
-            'email' => $this->faker->safeEmail(),
-            'name' => $this->faker->name()
+            "email" => $this->faker->safeEmail(),
+            "name" => $this->faker->name(),
+            "deleted_at" => $this->faker->optional(0.3)->dateTimeBetween("-3 days", "now"),
         ];
     }
 }

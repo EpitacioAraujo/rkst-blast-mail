@@ -4,10 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\EmailList;
 use App\Models\Subscriber;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class SubscriberSeed extends Seeder
+class SubscriberSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +15,7 @@ class SubscriberSeed extends Seeder
     {
         EmailList::all()->each(function ($emailList) {
             $emailList->subscribers()->saveMany(
-                Subscriber::factory()->count(rand(15, 25))->make(['email_list_id' => $emailList->id])
+                Subscriber::factory()->count(rand(7, 15))->make(['email_list_id' => $emailList->id])
             );
         });
     }
