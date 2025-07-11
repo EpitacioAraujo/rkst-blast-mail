@@ -28,8 +28,9 @@
             <x-table class="w-full ">
                 <x-slot:head>
                     <th></th>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Email') }}</th>
+                    <th></th>
                 </x-slot:head>
 
                 <x-slot:body>
@@ -38,6 +39,17 @@
                             <th>{{ $subscriber->id }}</th>
                             <td>{{ $subscriber->name }}</td>
                             <td>{{ $subscriber->email }}</td>
+                            <td>
+                                <x-form method="DELETE" class="w-min"
+                                    :action="route('email_lists.deleteSubscriber', compact('emailList', 'subscriber'))"
+                                    x-data="{}"
+                                    x-on:submit.prevent="if (confirm('{{ __('Are you sure you want to delete this subscriber?') }}')) { $el.submit(); }"
+                                >
+                                    <x-primary-button type="submit">
+                                        {{ __('Delete') }}
+                                    </x-primary-button>
+                                </x-form>
+                            </td>
                         </tr>
                     @endforeach
                 </x-slot:body>

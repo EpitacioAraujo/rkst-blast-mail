@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmailListRequest;
 use App\Http\Requests\UpdateEmailListRequest;
 use App\Models\EmailList;
+use App\Models\Subscriber;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmailListController extends Controller
 {
@@ -19,12 +21,16 @@ class EmailListController extends Controller
     {
         $search = request()->query('search', '');
 
+        /** @var User $user */
+        $user = Auth::user();
+
         $emailLists = EmailList::select()
+            ->where('user_id', $user->id)
             ->when($search, function (Builder $query) use ($search) {
                 $query->where('title', 'like', "%{$search}%");
             })
             ->withCount('subscribers')
-            ->paginate(1)
+            ->paginate(10)
             ->appends(['search' => $search]);
 
         return view('email_lists.lists', [
@@ -97,7 +103,7 @@ class EmailListController extends Controller
                     ->where('email', 'like', "%{$search}%")
                     ->orWhere('name', 'like', "%{$search}%");
             })
-            ->paginate(10)
+            ->paginate()
             ->appends(['search' => $search]);
 
         return view('email_lists.show', [
@@ -128,5 +134,15 @@ class EmailListController extends Controller
     public function destroy(EmailList $emailList)
     {
         //
+    }
+
+    public function deleteSubscriber(EmailList $emailList, Subscriber $subscriber)
+    {
+        if ($subscriber->email_list_id === $emailList->id) {
+            $subscriber->delete();
+            return redirect()->back()->with('success', __('Subscriber deleted successfully.'));
+        }
+
+        return redirect()->back()->with('error', __('Subscriber does not belong to this email list.'));
     }
 }

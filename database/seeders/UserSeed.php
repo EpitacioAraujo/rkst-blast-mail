@@ -18,5 +18,7 @@ class UserSeed extends Seeder
             'email' => 'admin@example.com',
             'password' => 'password'
         ]);
+
+        User::factory()->count(10)->create();
     }
 }

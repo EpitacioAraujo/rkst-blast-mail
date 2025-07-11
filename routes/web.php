@@ -15,6 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/email-lists/create', [EmailListController::class, 'create'])->name('email_lists.create');
     Route::post('/email-lists/create', [EmailListController::class, 'store']);
     Route::get('/email-lists/{emailList}', [EmailListController::class, 'show'])->name('email_lists.show');
+    Route::delete('/email-lists/{emailList}/subscriber/{subscriber}', [EmailListController::class, 'deleteSubscriber'])->name('email_lists.deleteSubscriber');
 });
 
 Route::get('/', function () {
