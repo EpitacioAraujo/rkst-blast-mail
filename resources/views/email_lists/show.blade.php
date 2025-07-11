@@ -18,7 +18,9 @@
     <x-section-content>
         <x-card class="flex flex-col gap-4">
             <div class="w-full flex flex-row justify-between">
-                <div></div>
+                <x-link-button :href="route('email_lists.subscriber.create', $emailList)">
+                    {{ __('Add subscriber') }}
+                </x-link-button>
 
                 <x-form id="search_form" :action="route('email_lists.show', $emailList)" class="w-1/3">
                     <x-text-input id="search" name="search" :value="request('search')" placeholder="{{ __('Search')}} " autofocus />
