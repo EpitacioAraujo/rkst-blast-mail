@@ -33,18 +33,18 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @foreach ($menu as $item)
-                        <x-nav-link :href="$item['url']" :active="$item['active']">
+                        <x-button.navigate :href="$item['url']" :active="$item['active']">
                             {{ $item['label'] }}
-                        </x-nav-link>
+                        </x-button.navigate>
                     @endforeach
 
-                    {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{-- <x-button.navigate :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
+                    </x-button.navigate>
 
-                    <x-nav-link :href="route('email_lists.index')" :active="request()->routeIs('email_lists.*')">
+                    <x-button.navigate :href="route('email_lists.index')" :active="request()->routeIs('email_lists.*')">
                         {{ __('Email list') }}
-                    </x-nav-link> --}}
+                    </x-button.navigate> --}}
                 </div>
             </div>
 

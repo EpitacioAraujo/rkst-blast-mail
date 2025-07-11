@@ -7,25 +7,25 @@
         <x-card>
             <x-form :action="route('email_lists.subscriber.create', compact('emailList'))" method="POST">
                 <div class="flex flex-col gap-2">
-                    <x-input-label for="name" :value="__('Name')" />
-                    <x-text-input id="name" class="block mt-1 w-full" name="name" :value="old('name')" autofocus />
-                    <x-input-error :messages="$errors->get('name')" />
+                    <x-input.adornment.label for="name" :value="__('Name')" />
+                    <x-input.text id="name" class="block mt-1 w-full" name="name" :value="old('name')" autofocus />
+                    <x-input.adornment.error :messages="$errors->get('name')" />
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" class="block mt-1 w-full" name="email" :value="old('email')" />
-                    <x-input-error :messages="$errors->get('email')" />
+                    <x-input.adornment.label for="email" :value="__('Email')" />
+                    <x-input.text id="email" class="block mt-1 w-full" name="email" :value="old('email')" />
+                    <x-input.adornment.error :messages="$errors->get('email')" />
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <x-link-button :href="route('email_lists.show', $emailList)">
+                    <x-button.link :href="route('email_lists.show', $emailList)">
                         {{ __('Cancel') }}
-                    </x-link-button>
+                    </x-button.link>
 
-                    <x-primary-button type="submit">
+                    <x-button.primary type="submit">
                         {{ __('Save') }}
-                    </x-primary-button>
+                    </x-button.primary>
                 </div>
             </x-form>
         </x-card>

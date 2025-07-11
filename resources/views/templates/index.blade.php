@@ -7,11 +7,11 @@
         <x-card class="flex flex-col gap-4">
             <div class="w-full flex justify-between items-center">
                 <div class="text-center">
-                    <x-link-button href="{{ route('templates.create') }}"> {{ __("Create a new template") }} </x-link-button>
+                    <x-button.link href="{{ route('templates.create') }}"> {{ __("Create a new template") }} </x-button.link>
                 </div>
 
                 <x-form :action="route('templates.index')" class="w-1/3">
-                    <x-text-input name="search" id="search" :value="request('search')" placeholder="{{ __('Search') }}" autofocus />
+                    <x-input.text name="search" id="search" :value="request('search')" placeholder="{{ __('Search') }}" autofocus />
                 </x-form>
             </div>
 
@@ -28,7 +28,7 @@
                             <th>{{ $template->id }}</th>
                             <td>{{ $template->title }}</td>
                             <td>
-                                <x-link-button :href="route('templates.edit', compact('template') )"> {{ __('Edit') }} </x-link-button>
+                                <x-button.link :href="route('templates.edit', compact('template') )"> {{ __('Edit') }} </x-button.link>
                             </td>
                         </tr>
                     @endforeach

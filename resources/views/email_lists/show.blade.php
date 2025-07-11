@@ -18,12 +18,12 @@
     <x-section-content>
         <x-card class="flex flex-col gap-4">
             <div class="w-full flex flex-row justify-between">
-                <x-link-button :href="route('email_lists.subscriber.create', $emailList)">
+                <x-button.link :href="route('email_lists.subscriber.create', $emailList)">
                     {{ __('Add subscriber') }}
-                </x-link-button>
+                </x-button.link>
 
                 <x-form id="search_form" :action="route('email_lists.show', $emailList)" class="w-1/3">
-                    <x-text-input id="search" name="search" :value="request('search')" placeholder="{{ __('Search')}} " autofocus />
+                    <x-input.text id="search" name="search" :value="request('search')" placeholder="{{ __('Search')}} " autofocus />
                 </x-form>
             </div>
 
@@ -47,9 +47,9 @@
                                     x-data="{}"
                                     x-on:submit.prevent="if (confirm('{{ __('Are you sure you want to delete this subscriber?') }}')) { $el.submit(); }"
                                 >
-                                    <x-primary-button type="submit">
+                                    <x-button.primary type="submit">
                                         {{ __('Delete') }}
-                                    </x-primary-button>
+                                    </x-button.primary>
                                 </x-form>
                             </td>
                         </tr>

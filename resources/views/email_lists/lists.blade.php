@@ -15,11 +15,11 @@
         <x-card class="flex flex-col gap-4">
             <div class="w-full flex justify-between items-center">
                 <div class="text-center">
-                    <x-link-button href="{{ route('email_lists.create') }}"> {{ __("Create a new email list") }} </x-link-button>
+                    <x-button.link href="{{ route('email_lists.create') }}"> {{ __("Create a new email list") }} </x-button.link>
                 </div>
 
                 <x-form :action="route('email_lists.index')" class="w-1/3">
-                    <x-text-input name="search" id="search" :value="request('search')" placeholder="{{ __('Search') }}" autofocus />
+                    <x-input.text name="search" id="search" :value="request('search')" placeholder="{{ __('Search') }}" autofocus />
                 </x-form>
             </div>
 
@@ -38,7 +38,7 @@
                             <td>{{ $emailList->title }}</td>
                             <td>{{ $emailList->subscribers_count }}</td>
                             <td>
-                                <x-link-button :href="route('email_lists.show', [$emailList])"> {{ __('Show') }} </x-link-button>
+                                <x-button.link :href="route('email_lists.show', [$emailList])"> {{ __('Show') }} </x-button.link>
                             </td>
                         </tr>
                     @endforeach
