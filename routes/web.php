@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmailListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -23,6 +24,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/email-lists/{emailList}/subscriber/create', [SubscriberController::class, 'store']);
 
     Route::delete('/email-lists/{emailList}/subscriber/{subscriber}', [EmailListController::class, 'deleteSubscriber'])->name('email_lists.deleteSubscriber');
+
+    Route::resource('templates', TemplateController::class)
+        ->except(['show']);
 });
 
 Route::get('/', function () {

@@ -1,3 +1,23 @@
+@php
+    $menu = [
+        [
+            "label" => __('Dashboard'),
+            "url" => route('dashboard'),
+            "active" => request()->routeIs('dashboard')
+        ],
+        [
+            "label" => __('Email list'),
+            "url" => route('email_lists.index'),
+            "active" => request()->routeIs('email_lists.*')
+        ],
+        [
+            "label" => __('Templates'),
+            "url" => route('templates.index'),
+            "active" => request()->routeIs('templates.*')
+        ],
+    ]
+@endphp
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,13 +32,19 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    @foreach ($menu as $item)
+                        <x-nav-link :href="$item['url']" :active="$item['active']">
+                            {{ $item['label'] }}
+                        </x-nav-link>
+                    @endforeach
+
+                    {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('email_lists.index')" :active="request()->routeIs('email_lists.*')">
                         {{ __('Email list') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
                 </div>
             </div>
 
@@ -71,13 +97,18 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            @foreach ($menu as $item)
+                <x-responsive-nav-link :href="$item['url']" :active="$item['active']">
+                    {{ $item['label'] }}
+                </x-responsive-nav-link>
+            @endforeach
+            {{-- <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('email_lists.index')" :active="request()->routeIs('email_lists.*')">
                 {{ __('Email list') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
         </div>
 
         <!-- Responsive Settings Options -->
