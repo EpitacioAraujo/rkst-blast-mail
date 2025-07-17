@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaignsController;
 use App\Http\Controllers\EmailListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriberController;
@@ -27,6 +28,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('templates', TemplateController::class)
         ->except(['show']);
+
+    Route::resource('campaigns', CampaignsController::class)
+        ->only(['index', 'create', 'store', 'destroy']);
 });
 
 Route::get('/', function () {

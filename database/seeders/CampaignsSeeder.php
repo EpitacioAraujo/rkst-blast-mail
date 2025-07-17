@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Campaings;
+use App\Models\Campaigns;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class CampaingsSeeder extends Seeder
+class CampaignsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,7 +24,7 @@ class CampaingsSeeder extends Seeder
                 return;
             }
 
-            $campaings = Campaings::factory()
+            $campaigns = Campaigns::factory()
                 ->count(3)
                 ->create([
                     'body' => $template->body,
@@ -32,7 +32,7 @@ class CampaingsSeeder extends Seeder
                     'email_list_id' => $emailList->id,
                 ]);
 
-            $user->campaings()->saveMany($campaings);
+            $user->campaigns()->saveMany($campaigns);
         });
     }
 }

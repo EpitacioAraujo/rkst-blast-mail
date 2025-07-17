@@ -65,8 +65,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Template::class);
     }
 
-    public function campaings()
+    public function campaigns()
     {
-        return $this->hasMany(Campaings::class);
+        return $this->hasMany(Campaigns::class);
     }
 }

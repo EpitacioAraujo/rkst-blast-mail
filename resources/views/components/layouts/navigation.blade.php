@@ -15,6 +15,11 @@
             "url" => route('templates.index'),
             "active" => request()->routeIs('templates.*')
         ],
+        [
+            "label" => __('Campaigns'),
+            "url" => route('campaigns.index'),
+            "active" => request()->routeIs('campaigns.*')
+        ],
     ]
 @endphp
 

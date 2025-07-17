@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Campaings extends Model
+class Campaigns extends Model
 {
     /**
-     * @use HasFactory<\Database\Factories\CampaingsFactory>
+     * @use HasFactory<\Database\Factories\CampaignsFactory>
      * @use SoftDeletes<\Illuminate\Database\Eloquent\SoftDeletes>
      * */
     use HasFactory, SoftDeletes;
