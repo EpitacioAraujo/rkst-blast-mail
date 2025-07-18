@@ -31,6 +31,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('campaigns', CampaignsController::class)
         ->only(['index', 'create', 'store', 'destroy']);
+
+    Route::get('/campaigns/{campaign}/restore', [CampaignsController::class, 'restore'])
+        ->withTrashed()
+        ->name('campaigns.restore');
 });
 
 Route::get('/', function () {

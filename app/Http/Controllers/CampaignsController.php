@@ -17,15 +17,19 @@ class CampaignsController extends Controller
         ];
 
         $search = request()->input('search', '');
+        $with_trashed = request()->input('with_trashed', false);
 
         $campaigns = Campaigns::query()
+            ->when($with_trashed, function ($query) {
+                $query->withTrashed();
+            })
             ->when($search, function ($query) use ($search) {
                 $query
                     ->where('id', 'like', "{$search}%")
                     ->orWhere('title', 'like', "%{$search}%");
             })
             ->paginate(10)
-            ->appends(compact('search'));
+            ->appends(compact('search', 'with_trashed'));
 
         return view('campaigns.index', [
             'campaigns' => $campaigns,
@@ -79,5 +83,13 @@ class CampaignsController extends Controller
     public function destroy(Campaigns $campaign)
     {
         //
+    }
+
+    public function restore(Campaigns $campaign)
+    {
+        $campaign->restore();
+
+        return redirect()->route('campaigns.index')
+            ->with('success', __('Campaign restored successfully.'));
     }
 }
